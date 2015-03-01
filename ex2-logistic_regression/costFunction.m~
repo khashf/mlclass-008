@@ -11,21 +11,32 @@ m = length(y); % number of training examples
 J = 0;
 grad = zeros(size(theta));
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: Compute the cost of a particular choice of theta.
-%               You should set J to the cost.
-%               Compute the partial derivatives and set grad to the partial
-%               derivatives of the cost w.r.t. each parameter in theta
+
+% Compute the cost of a particular choice of theta.
+% You should set J to the cost.
+% Compute the partial derivatives and set grad to the partial
+% derivatives of the cost w.r.t. each parameter in theta
 %
 % Note: grad should have the same dimensions as theta
 %
 
 % compute cost
-for i=1:m
-	hTheta = sigmoid(theta' * X(i,:)');
-	J = J + (-y(i,:) * log(hTheta) - (1 - y(i,:)) * log(1 - hTheta) );
-end;
-J = J / m;
+%for i=1:m
+%	hTheta = sigmoid(theta' * X(i,:)');
+%	J = J + (-y(i,:) * log(hTheta) - (1 - y(i,:)) * log(1 - hTheta) );
+%end;
+%J = J / m;
+
+hTheta = X .* theta
+%sum1 = sum(((-1) * y) .* log(hTheta) - (ones(size(y),1) - y) .* log(ones(size(hTheta),1) - hTheta))
+A1 = (-1 * y)
+A2 = log(hTheta)
+A = A1 .* A2
+B = (1 - y) .* log(1 - hTheta)
+C = A - B
+sum2 = sum(C)
+sum1 = sum( -1 * y .* log(hTheta) - (1 - y) .* log(1 - hTheta) )
+J =  sum1 / m
 
 % compute gradient
 for i=1:size(theta,1)

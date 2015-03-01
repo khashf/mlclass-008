@@ -27,6 +27,8 @@ for i=1:m
 end;
 J = J / m;
 
+
+
 % compute gradient
 for i=1:size(theta,1)
 	for j = 1:m

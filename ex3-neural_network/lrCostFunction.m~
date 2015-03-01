@@ -51,7 +51,7 @@ J =  sum1 + reg
 thetaReg = theta;
 thetaReg(1) = 0; % not include theta0
 reg2 = lambda/m * thetaReg;
-grad = (1/m) * (X' * (hTheta - y));
+grad = (1/m) * X' * (hTheta - y);
 
 
 
