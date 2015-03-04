@@ -36,31 +36,20 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
-hTheta = X * theta;
-costReg = theta.^2;
-costReg(1) = 0; % not include theta0
-reg = lambda/(2*m) * sum(costReg);
-sum1 = (1/m) * sum(((-1) * y) .* log(hTheta) - (ones(size(y),1) - y) .* log(ones(size(hTheta),1) - hTheta))
-J =  sum1 + reg
+hTheta = sigmoid(X * theta);
+J = sum( (-y) .* log(hTheta) - (1.0 - y) .* log(1.0 - hTheta) );
+J = J / m;
+regCost = (lambda/(2.0*m)) .* sum(theta(2:end).^2.0);
+J = J + regCost;
 
 %fprintf('size of hTheta = %d %d\n', size(hTheta,1), size(hTheta,2));
 %fprintf('size of X = %d %d\n', size(X,1), size(X,2));
 %fprintf('size of y = %d %d\n', size(y,1), size(y,2));
 %fprintf('size of costReg = %d %d\n', size(costReg,1), size(costReg,2));
 
-thetaReg = theta;
-thetaReg(1) = 0; % not include theta0
-reg2 = lambda/m * thetaReg;
-grad = (1/m) * X' * (hTheta - y);
+grad = (X' * (hTheta - y));
+grad = grad / m;
+regGrad = theta;
+regGrad(1) = 0;
+grad = grad + (lambda/m) .* regGrad;
 
-
-
-
-
-
-
-% =============================================================
-
-grad = grad(:);
-
-end

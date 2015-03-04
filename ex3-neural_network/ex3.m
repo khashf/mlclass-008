@@ -56,8 +56,8 @@ fprintf('\nTraining One-vs-All Logistic Regression...\n')
 
 lambda = 0.1;
 [m, n] = size(X);
-initial_theta = zeros(n, 1);
-[J, grad] = lrCostFunction(initial_theta, X, y, lambda)
+% initial_theta = zeros(n, 1);
+% [J, grad] = lrCostFunction(initial_theta, X, y, lambda)
 [all_theta] = oneVsAll(X, y, num_labels, lambda);
 
 fprintf('Program paused. Press enter to continue.\n');

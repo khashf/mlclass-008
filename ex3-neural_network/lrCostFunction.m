@@ -12,55 +12,16 @@ m = length(y); % number of training examples
 J = 0;
 grad = zeros(size(theta));
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: Compute the cost of a particular choice of theta.
-%               You should set J to the cost.
-%               Compute the partial derivatives and set grad to the partial
-%               derivatives of the cost w.r.t. each parameter in theta
-%
-% Hint: The computation of the cost function and gradients can be
-%       efficiently vectorized. For example, consider the computation
-%
-%           sigmoid(X * theta)
-%
-%       Each row of the resulting matrix will contain the value of the
-%       prediction for that example. You can make use of this to vectorize
-%       the cost function and gradient computations. 
-%
-% Hint: When computing the gradient of the regularized cost function, 
-%       there're many possible vectorized solutions, but one solution
-%       looks like:
-%           grad = (unregularized gradient for logistic regression)
-%           temp = theta; 
-%           temp(1) = 0;   % because we don't add anything for j = 0  
-%           grad = grad + YOUR_CODE_HERE (using the temp variable)
-%
 
-hTheta = X * theta;
-costReg = theta.^2;
-costReg(1) = 0; % not include theta0
-reg = lambda/(2*m) * sum(costReg);
-sum1 = (1/m) * sum(((-1) * y) .* log(hTheta) - (ones(size(y),1) - y) .* log(ones(size(hTheta),1) - hTheta))
-J =  sum1 + reg
+hTheta = sigmoid(X * theta);
+J = sum( (-y) .* log(hTheta) - (1.0 - y) .* log(1.0 - hTheta) );
+J = J / m;
+regCost = (lambda/(2.0*m)) .* sum(theta(2:end).^2.0);
+J = J + regCost;
 
-%fprintf('size of hTheta = %d %d\n', size(hTheta,1), size(hTheta,2));
-%fprintf('size of X = %d %d\n', size(X,1), size(X,2));
-%fprintf('size of y = %d %d\n', size(y,1), size(y,2));
-%fprintf('size of costReg = %d %d\n', size(costReg,1), size(costReg,2));
+grad = (X' * (hTheta - y));
+grad = grad / m;
+regGrad = theta;
+regGrad(1) = 0;
+grad = grad + (lambda/m) .* regGrad;
 
-thetaReg = theta;
-thetaReg(1) = 0; % not include theta0
-reg2 = lambda/m * thetaReg;
-grad = (1/m) * (X' * (hTheta - y));
-
-
-
-
-
-
-
-% =============================================================
-
-grad = grad(:);
-
-end
